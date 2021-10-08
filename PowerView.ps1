@@ -20912,3 +20912,5 @@ Set-Alias Find-ForeignUser Get-DomainForeignUser
 Set-Alias Find-ForeignGroup Get-DomainForeignGroupMember
 Set-Alias Invoke-MapDomainTrust Get-DomainTrustMapping
 Set-Alias Get-DomainPolicy Get-DomainPolicyData
+
+Invoke-ShareFinder -checkshareaccess -excludeprint -excludeipc
