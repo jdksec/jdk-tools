@@ -1,0 +1,111 @@
+REM ###########################################
+REM ### Grab System Details
+REM ###########################################
+
+wmic computersystem get name | findstr /v Name > hostname.txt
+
+systeminfo > systeminfo.txt
+
+set > environment-variables.txt
+
+wmic os get caption,version,ServicePackMajorVersion | findstr /v Caption > os.txt
+
+wmic qfe | findstr /v Caption > installed-patches.txt
+
+
+
+REM ###########################################
+REM ### Grab Network Details
+REM ###########################################
+
+ipconfig /all > ipconfig-all.txt
+
+netstat -nr > routing-table.txt
+
+netstat -anp tcp | findstr LISTEN > tcp-listeners.txt
+
+netstat -anp udp | findstr LISTEN > udp-listeners.txt
+
+netsh advfirewall show currentprofile > fw-currentprofile.txt
+
+netsh advfirewall show allprofile > fw-allprofile.txt
+
+
+
+REM ###########################################
+REM ### Grab User Details
+REM ###########################################
+
+net users > net-users.txt
+
+net accounts > net-accounts.txt
+
+net localgroup administrators > net-administrators.txt
+
+net localgroup "remote desktop users" > net-remote-desktop-users.txt
+
+net share > net-share.txt
+
+
+
+REM ###########################################
+REM ### Tasklist
+REM ###########################################
+
+tasklist > tasklist.txt
+
+
+
+REM ###########################################
+REM ### Registry Keys
+REM ###########################################
+
+reg query "hklm\system\currentcontrolset\services\lanmanserver\parameters" > reg-lanmanserver.txt
+
+reg query "hklm\system\currentcontrolset\services\lanmanworkstation\parameters" > reg-lanmanworkstation.txt
+
+reg query "hklm\software\microsoft\windows nt\currentversion\winlogon" > reg-winlogon.txt
+
+reg query "hklm\system\currentcontrolset\control\lsa" > reg-lsa.txt
+
+reg query "hklm\software\policies\microsoft\windows\windowsupdate" > reg-wsus.txt
+
+reg query "hklm\software\policies\microsoft\windows\windowsupdate\au" >> reg-wsus.txt
+
+reg query "hklm\software\microsoft\windows\currentversion\policies\explorer" > reg-autoruns.txt
+
+reg query "hkcu\software\microsoft\windows\currentversion\policies\explorer" >> reg-autoruns.txt
+
+reg query "hklm\software\microsoft\windows\currentversion\run" > reg-startup.txt
+
+reg query "hklm\software\microsoft\windows\currentversion\runonce" >> reg-startup.txt
+
+reg query "hklm\software\microsoft\windows\currentversion\runservices" >> reg-startup.txt
+
+reg query "hklm\software\microsoft\windows\currentversion\runservicesonce" >> reg-startup.txt
+
+reg query "hklm\software\microsoft\windows nt\currentversion\winlogon\userinit" >> reg-startup.txt
+
+reg query "hkcu\software\microsoft\windows\currentversion\run" >> reg-startup.txt
+
+reg query "hkcu\software\microsoft\windows\currentversion\runonce" >> reg-startup.txt
+
+reg query "hkcu\software\microsoft\windows\currentversion\runservices" >> reg-startup.txt
+
+reg query "hkcu\software\microsoft\windows\currentversion\runservicesonce" >> reg-startup.txt
+
+reg query "hkcu\software\microsoft\windows nt\currentversion\windows" >> reg-startup.txt
+
+reg query "hklm\system\currentcontrolset\control\terminal server" > reg-terminal-server.txt
+
+reg query "hklm\software\microsoft\windows\currentversion\policies\system /v ConsentPromptBehaviorAdmin" > reg-uac.txt
+
+
+
+REM ###########################################
+REM ### Security Policy
+REM ###########################################
+
+secedit.exe /export /cfg sec.txt
+
+
