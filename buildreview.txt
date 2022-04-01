@@ -1,111 +1,103 @@
-REM ###########################################
-REM ### Grab System Details
-REM ###########################################
+echo Running Build Review Commands, please wait....
+@echo off
 
-wmic computersystem get name | findstr /v Name > hostname.txt
+echo -------- >> buildreview.txt
+echo [+] System Info >> buildreview.txt
+systeminfo >> buildreview.txt
 
-systeminfo > systeminfo.txt
+echo -------- >> buildreview.txt
+echo [+] Patches >> buildreview.txt
+wmic qfe list >> buildreview.txt
 
-set > environment-variables.txt
+echo -------- >> buildreview.txt
+echo [+] User privs >> buildreview.txt
+whoami /priv >> buildreview.txt
 
-wmic os get caption,version,ServicePackMajorVersion | findstr /v Caption > os.txt
+echo -------- >> buildreview.txt
+echo [+] Shares >> buildreview.txt
+net share >> buildreview.txt
 
-wmic qfe | findstr /v Caption > installed-patches.txt
+echo -------- >> buildreview.txt
+echo [+] Localgroups >> buildreview.txt
+net localgroup >> buildreview.txt
 
+echo -------- >> buildreview.txt
+echo [+] Local Users >> buildreview.txt
+net users >> buildreview.txt
 
+echo -------- >> buildreview.txt
+echo [+] Password Policy >> buildreview.txt
+net accounts >> buildreview.txt
 
-REM ###########################################
-REM ### Grab Network Details
-REM ###########################################
+echo -------- >> buildreview.txt
+echo [+] GP-Results >> buildreview.txt
+GPResult /R >> buildreview.txt
 
-ipconfig /all > ipconfig-all.txt
+echo -------- >> buildreview.txt
+echo [+] Software >> buildreview.txt
+wmic /output:"Software.txt" product get Name, Version, Vendor
 
-netstat -nr > routing-table.txt
+echo -------- >> buildreview.txt
+echo [+] IP Info >> buildreview.txt
+ipconfig /all >> buildreview.txt
 
-netstat -anp tcp | findstr LISTEN > tcp-listeners.txt
+echo -------- >> buildreview.txt
+echo [+] Internet Connectivity >> buildreview.txt
+PING www.google.com >> buildreview.txt
 
-netstat -anp udp | findstr LISTEN > udp-listeners.txt
+echo -------- >> buildreview.txt
+echo [+] Route >> buildreview.txt
+route PRINT >> buildreview.txt
 
-netsh advfirewall show currentprofile > fw-currentprofile.txt
+echo -------- >> buildreview.txt
+echo [+] Traceroute >> buildreview.txt
+tracert google.com >> buildreview.txt
 
-netsh advfirewall show allprofile > fw-allprofile.txt
+echo -------- >> buildreview.txt
+echo [+] Domain PW Policy >> buildreview.txt
+net accounts /domain >> buildreview.txt
 
+echo -------- >> buildreview.txt
+echo [+] Domain Users >> buildreview.txt
+net users /domain >> buildreview.txt
 
+echo -------- >> buildreview.txt
+echo [+] Domain groups >> buildreview.txt
+net groups /domain >> buildreview.txt
 
-REM ###########################################
-REM ### Grab User Details
-REM ###########################################
+echo -------- >> buildreview.txt
+echo [+] Domain Admins >> buildreview.txt
+net group "Domain admins" /domain >> buildreview.txt
 
-net users > net-users.txt
+echo -------- >> buildreview.txt
+echo [+] ARP Known Hosts >> buildreview.txt
+arp -A >> buildreview.txt
 
-net accounts > net-accounts.txt
+echo -------- >> buildreview.txt
+echo [+] Netstat >> buildreview.txt
+netstat -ano >> buildreview.txt
 
-net localgroup administrators > net-administrators.txt
+echo -------- >> buildreview.txt
+echo [+] Hosts >> buildreview.txt
+type C:\WINDOWS\System32\drivers\etc\hosts >> buildreview.txt
 
-net localgroup "remote desktop users" > net-remote-desktop-users.txt
+echo -------- >> buildreview.txt
+echo [+] DNS Records >> buildreview.txt
+ipconfig /displaydns | findstr "Record" | findstr "Name Host" >> buildreview.txt
 
-net share > net-share.txt
+echo -------- >> buildreview.txt
+echo [+] Logged In Users >> buildreview.txt
+qwinsta >> buildreview.txt
 
+echo -------- >> buildreview.txt
+echo [+] List Sessions >> buildreview.txt
+klist sessions >> buildreview.txt
 
+echo -------- >> buildreview.txt
+echo [+] Stored Credentials >> buildreview.txt
+cmdkey /list >> buildreview.txt
 
-REM ###########################################
-REM ### Tasklist
-REM ###########################################
-
-tasklist > tasklist.txt
-
-
-
-REM ###########################################
-REM ### Registry Keys
-REM ###########################################
-
-reg query "hklm\system\currentcontrolset\services\lanmanserver\parameters" > reg-lanmanserver.txt
-
-reg query "hklm\system\currentcontrolset\services\lanmanworkstation\parameters" > reg-lanmanworkstation.txt
-
-reg query "hklm\software\microsoft\windows nt\currentversion\winlogon" > reg-winlogon.txt
-
-reg query "hklm\system\currentcontrolset\control\lsa" > reg-lsa.txt
-
-reg query "hklm\software\policies\microsoft\windows\windowsupdate" > reg-wsus.txt
-
-reg query "hklm\software\policies\microsoft\windows\windowsupdate\au" >> reg-wsus.txt
-
-reg query "hklm\software\microsoft\windows\currentversion\policies\explorer" > reg-autoruns.txt
-
-reg query "hkcu\software\microsoft\windows\currentversion\policies\explorer" >> reg-autoruns.txt
-
-reg query "hklm\software\microsoft\windows\currentversion\run" > reg-startup.txt
-
-reg query "hklm\software\microsoft\windows\currentversion\runonce" >> reg-startup.txt
-
-reg query "hklm\software\microsoft\windows\currentversion\runservices" >> reg-startup.txt
-
-reg query "hklm\software\microsoft\windows\currentversion\runservicesonce" >> reg-startup.txt
-
-reg query "hklm\software\microsoft\windows nt\currentversion\winlogon\userinit" >> reg-startup.txt
-
-reg query "hkcu\software\microsoft\windows\currentversion\run" >> reg-startup.txt
-
-reg query "hkcu\software\microsoft\windows\currentversion\runonce" >> reg-startup.txt
-
-reg query "hkcu\software\microsoft\windows\currentversion\runservices" >> reg-startup.txt
-
-reg query "hkcu\software\microsoft\windows\currentversion\runservicesonce" >> reg-startup.txt
-
-reg query "hkcu\software\microsoft\windows nt\currentversion\windows" >> reg-startup.txt
-
-reg query "hklm\system\currentcontrolset\control\terminal server" > reg-terminal-server.txt
-
-reg query "hklm\software\microsoft\windows\currentversion\policies\system /v ConsentPromptBehaviorAdmin" > reg-uac.txt
-
-
-
-REM ###########################################
-REM ### Security Policy
-REM ###########################################
-
-secedit.exe /export /cfg sec.txt
-
+echo -------- >> buildreview.txt
+echo [+] Logged In Users >> buildreview.txt
+query user >> buildreview.txt
 
