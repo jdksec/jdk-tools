@@ -1,7 +1,5 @@
 # RemoteTools
 
-# Credit to og uploader / creators
-
 ## These are configured to be run via powershell remotely.  
 Run any of the following commands via the powershell terminal
 
