@@ -11,4 +11,7 @@ Combines two nessus files into one.
 Basic scanner for all hosts, can be used as `hostscan.sh 192.168.1.1 "--top-ports 100" "--top-ports 20"` to define the nmap ports you want to scan
 
 # Fileupload (server and client)
-Small golang script that will allow file uploads to the current dir over https using a baked in key. Client is formatted to perform the upload for you or you can use curl
+Small golang script that will allow file uploads to the current dir over https using a baked in key. Client is formatted to perform the upload for you or you can use curl:
+```
+curl -sk -X POST -H "X-API-Key: Pentest12345" -F "file=@test.txt" -F "filename=test.txt" https://127.0.0.1:8443/files
+```
