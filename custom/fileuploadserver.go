@@ -68,7 +68,7 @@ func main() {
 		}
 
 		// Check for the "X-API-Key" header
-		if r.Header.Get("X-API-Key") != "yourkey" {
+		if r.Header.Get("X-API-Key") != "Pentest12345" {
 			http.Error(w, "Invalid API key", http.StatusUnauthorized)
 			return
 		}
