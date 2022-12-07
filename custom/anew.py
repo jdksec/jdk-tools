@@ -1,4 +1,6 @@
+# creds to tomnomnom for the OG go script
 import argparse
+
 
 # create an argument parser
 parser = argparse.ArgumentParser()
