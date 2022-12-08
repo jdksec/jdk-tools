@@ -15,3 +15,6 @@ Small golang script that will allow file uploads to the current dir over https u
 ```
 curl -sk -X POST -H "X-API-Key: Pentest12345" -F "file=@test.txt" -F "filename=test.txt" https://127.0.0.1:8443/files
 ```
+
+# Multi Downloader
+Will try and download an exe from a remote webserver using 4 methods, if any method is successful it will run the file and exit the program, if one fails it will move to the last and finally use certutil (which flags defender) as a last attempt.
