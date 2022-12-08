@@ -40,3 +40,6 @@ Checks  a list of domains from stdin, checks the cname, if the cname does not co
 ```
 cat domains.txt | go run cnamescanner.go
 ```
+
+# Get HTTP Response (go)
+Script that takes a list of urls from stdin, requests the url and writes the response to a file called responses.txt in the format url,base64encoded(response.body) which is useful for monitoring sites or taking a snapshot of the responses for future tests.
