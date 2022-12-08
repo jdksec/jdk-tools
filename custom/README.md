@@ -33,7 +33,7 @@ Will try and download an exe from a remote webserver using 4 methods, if any met
 ## Encode
 Encodes a file with xor to file.txt. 
 ## Decode
-Decodes a file with xor to file.exe then runs
+Decodes a file.txt with xor to file.exe then runs
 
 # Cname Scanner
 Checks  a list of domains from stdin, checks the cname, if the cname does not contain the domain name it prints the domain and the cname.
