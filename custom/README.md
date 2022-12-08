@@ -35,7 +35,7 @@ Encodes a file with xor to file.txt.
 ## Decode
 Decodes a file.txt with xor to file.exe then runs
 
-# Cname Scanner
+# Cname Scanner (go)
 Checks  a list of domains from stdin, checks the cname, if the cname does not contain the domain name it prints the domain and the cname.
 ```
 cat domains.txt | go run cnamescanner.go
