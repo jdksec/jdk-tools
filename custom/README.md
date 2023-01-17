@@ -35,6 +35,16 @@ Encodes a file with xor to file.txt.
 ## Decode
 Decodes a file.txt with xor to file.exe then runs
 
+## Decode Powershell script
+```
+$encoded = Get-Content -Path .\file.txt
+$decoded = [System.Convert]::FromBase64String($encoded)
+$key = [System.Text.Encoding]::ASCII.GetBytes("mysecretkey")
+$decodedBytes = for ($i = 0; $i -lt $decoded.Length; $i++) {$decoded[$i] -bxor $key[$i % $key.Length]}
+[System.IO.File]::WriteAllBytes(".\file.exe", $decodedBytes)
+Start-Process -FilePath .\file.exe
+```
+
 # Cname Scanner (go)
 Checks  a list of domains from stdin, checks the cname, if the cname does not contain the domain name it prints the domain and the cname.
 ```
