@@ -37,6 +37,18 @@ Decodes a file.txt with xor to file.exe then runs
 
 ## Decode Powershell script
 ```
+$file = Get-Content "file.txt" -Raw
+$decodedBytes = [System.Convert]::FromBase64String($file)
+$key = [System.Text.Encoding]::ASCII.GetBytes("mysecretkey")
+
+for ($i = 0; $i -lt $decodedBytes.Length; $i++) {
+    $decodedBytes[$i] = $decodedBytes[$i] -bxor $key[$i % $key.Length]
+}
+
+[System.IO.File]::WriteAllBytes("file.exe", $decodedBytes)
+
+or
+
 $encoded = Get-Content -Path .\file.txt
 $decoded = [System.Convert]::FromBase64String($encoded)
 $key = [System.Text.Encoding]::ASCII.GetBytes("Pentest12345")
