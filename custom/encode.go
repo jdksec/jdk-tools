@@ -26,7 +26,7 @@ func main() {
 	encodedString := base64.StdEncoding.EncodeToString(encoded)
 
 	// Write the encoded file as a text file
-	err = ioutil.WriteFile("file.txt", []byte(encodedString), 0644)
+	err = ioutil.WriteFile(os.Args[1] + ".txt", []byte(encodedString), 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
