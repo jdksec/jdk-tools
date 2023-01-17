@@ -54,6 +54,16 @@ for ($i = 0; $i -lt $decoded.Length; $i++) {
     $decoded[$i] = [char]([byte]$decoded[$i] -bxor $key[$i % $key.Length])
 }
 $decoded | Out-File -FilePath "file.exe"
+
+or
+
+$encoded = Get-Content "file.txt"
+$decoded = [System.Convert]::FromBase64String($encoded)
+$key = "mysecretkey"
+$decodedBytes = $decoded -bxor $key
+Set-Content -Path "file.exe" -Value $decodedBytes -Encoding Byte
+
+
 ```
 
 # Cname Scanner (go)
