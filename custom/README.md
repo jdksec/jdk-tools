@@ -56,3 +56,36 @@ cat domains.txt | go run cnamescanner.go
 
 # Get HTTP Response (go)
 Script that takes a list of urls from stdin, requests the url and writes the response to a file called responses.txt in the format url,base64encoded(response.body) which is useful for monitoring sites or taking a snapshot of the responses for future tests.
+
+
+# Xor Encrypt file for smuggling
+```
+import sys
+import base64
+key = "Pentest12345"
+file_name = sys.argv[1]
+with open(file_name, "rb") as file:
+    file_contents = file.read()
+encrypted_contents = bytearray()
+for i in range(len(file_contents)):
+    encrypted_contents.append(file_contents[i] ^ ord(key[i % len(key)]))
+encoded_contents = base64.b64encode(encrypted_contents)
+new_file_name = file_name + ".txt"
+with open(new_file_name, "wb") as file:
+    file.write(encoded_contents)
+print("Encryption and encoding successful. New file created:", new_file_name)
+```
+
+# Xor Decrypt File
+```
+$encoded = Get-Content "test.exe.txt"
+$decoded = [System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($encoded))
+$key = "Pentest12345"
+$decrypted = ""
+for ($i = 0; $i -lt $decoded.Length; $i++) {
+    $decrypted += [char]([byte]$decoded[$i] -bxor [byte]($key[$i % $key.Length]))
+}
+$path = (Get-Location).Path + "\test.exe"
+[System.IO.File]::WriteAllText($path, $decrypted)
+Write-Host "Decryption and decoding successful. New file created at: $path"
+```
