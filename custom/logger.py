@@ -26,11 +26,11 @@ def index():
         <html>
             <head>
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-                <title>Ask a question</title>
+                <title>Logger</title>
             </head>
             <body>
                 <div class="container">
-                    <h1 class="text-center mt-5">Ask a question</h1>
+                    <h1 class="text-center mt-5">Add a log entry</h1>
                     <form method="post">
                         <div class="form-group">
                             <textarea class="form-control" name="text_input"></textarea>
@@ -50,11 +50,11 @@ def index():
     <html>
         <head>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-            <title>Ask a question</title>
+            <title>Add a log entry</title>
         </head>
         <body>
             <div class="container">
-                <h1 class="text-center mt-5">Ask a question</h1>
+                <h1 class="text-center mt-5">Add a log entry</h1>
                 <form method="post">
                     <div class="form-group">
                         <textarea class="form-control" name="text_input"></textarea>
