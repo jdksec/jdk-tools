@@ -38,7 +38,7 @@ def index():
                         <br></br>
                         <input type="submit" class="btn btn-primary" value="Submit">
                     </form>
-                    <h1 class="text-centre mt-5">Answer</h1>
+                    <h2 class="text-centre mt-5">Log entry created</h1>
                     <code class="text-left">
                     {}
                     </code>
