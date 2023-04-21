@@ -1,3 +1,7 @@
+# Usage: https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries
+
+For some of the other ones, search github or google
+
 # List of files:
 
 Invoke-BadPotato.ps1 = 1ba874180c99ed8b4aa88bcb26cfe1c6.zip
