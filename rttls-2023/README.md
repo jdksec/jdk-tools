@@ -165,3 +165,4 @@ Invoke-Whisker.ps1 = 217fa318fe5162ac8034b7e47c9ff30d.zip
 Invoke-winPEAS.ps1 = 1d501999cda41574a9420f3d3bc60f6c.zip
 
 Invoke-WireTap.ps1 = b29eeb2162346f1f1b216c8fe73c9a70.zip
+PowerView.ps1 = bd51895ec50ad13a5a74ac8f5c92021b.zip
