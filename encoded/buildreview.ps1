@@ -6493,4 +6493,3 @@ Get-Variable -Exclude PWD,*Preference | Remove-Variable -EA 0
 
 write-output "`n[*] Benchmark Compliance Audit" | tee-object -append audit.txt
 type compiance-results.csv >> audit.txt
-del compiance-results.csv 
