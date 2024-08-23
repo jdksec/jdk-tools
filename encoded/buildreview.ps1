@@ -35,13 +35,6 @@ get-childitem "C:\Users\" -recurse -Include *.zip,*.rar,*.7z,*.gz,*.conf,*.rdp,*
 write-output "`n[*] Last modified files:" | tee-object -append audit.txt
 Get-ChildItem 'C:\Users' -recurse -EA SilentlyContinue | Sort {$_.LastWriteTime} |  %{$_.FullName } | select -last 10 | ft -hidetableheaders | tee-object -append audit.txt
 
-
-#ASD Hardening Microsoft Windows 10, version 1709 Workstations compliance script. This script will check the applied settings in the current user context.
-#This script is based on the settings recommended in the ASD Hardening Guide here: https://acsc.gov.au/publications/protect/Hardening_Win10.pdf
-#Created by github.com/cottinghamd and github.com/huda008
-#NOTE: This script will also work on other versions of Windows, including Windows Server + Server 2019 etc, however not all options checked may be comparable / relevant to Windows 10 1709
-#Incorporated Invoke-ElevatedCommand by TaoK https://gist.github.com/TaoK/1582185
-
 If ($isDotSourced = $MyInvocation.InvocationName -eq '.' -or $MyInvocation.Line -eq '')
 {
 #donothingandcontinue
