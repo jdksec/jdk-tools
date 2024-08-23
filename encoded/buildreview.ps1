@@ -19,8 +19,13 @@ write-output "`n[*] Services:" | tee-object -append audit.txt
 get-service | Select Name,DisplayName,Status | sort status | Format-Table -Property * -AutoSize | tee-object -append audit.txt
 write-output "`n[*] Software:" | tee-object -append audit.txt
 get-wmiobject -Class win32_product | select Name, Version, Caption | ft -hidetableheaders -autosize | tee-object -append audit.txt
+write-output "`n[*] Software Versions:" | tee-object -append audit.txt
+Get-WmiObject -Class Win32_Product | Select-Object -Property Name, Version | tee-object -append audit.txt
+Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion | tee-object -append audit.txt
 write-output "`n[*] Patches:" | tee-object -append audit.txt
 Get-Wmiobject -class Win32_QuickFixEngineering -namespace "root\cimv2" | select HotFixID, InstalledOn| ft -autosize | tee-object -append audit.txt
+write-output "`n[*] Patches Installed:" | tee-object -append audit.txt
+Get-HotFix | Select-Object Description, HotFixID, InstalledOn | ft -autosize | tee-object -append audit.txt
 write-output "`n[*] Program Files:" | tee-object -append audit.txt
 get-childitem "C:\Program Files"  -EA SilentlyContinue  | select Name  | ft -hidetableheaders -autosize | tee-object -append audit.txt
 get-childitem "C:\Program Files (x86)"  -EA SilentlyContinue  | select Name  | ft -hidetableheaders -autosize | tee-object -append audit.txt
