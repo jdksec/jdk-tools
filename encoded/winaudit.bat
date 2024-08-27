@@ -9,10 +9,6 @@ if not %ERRORLEVEL% == 0 (
   pause
   exit /b 1
 )
-
-IF NOT EXIST deps\procdump.exe GOTO ERROR1
-IF NOT EXIST deps\autorunsc.exe GOTO ERROR1
-
 ECHO Setting up...
 set host=%COMPUTERNAME%
 IF NOT EXIST %host% MKDIR %host%
