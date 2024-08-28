@@ -250,21 +250,12 @@ schtasks /query /v /fo LIST > schtaskslist.txt
 schtasks /query /v /fo CSV > schtaskslist.csv
 reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" /v EnableMulticast > llmnr.txt
 
-ECHO Running Azure VM checks...
-curl.exe -H "Metadata: true" "http://169.254.169.254/metadata/instance?api-version=2021-12-13" > azure_vm_instance.txt
-curl.exe -H "Metadata: true" "http://169.254.169.254/metadata/loadbalancer?api-version=2021-12-13" > azure_vm_loadbalancer.txt
-curl.exe -H "Metadata: true" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2021-12-13&resource=https://management.azure.com/" > azure_vm_management_token.txt
-curl.exe -H "Metadata: true" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2021-12-13&resource=https://graph.microsoft.com/" > azure_vm_graph_token.txt
-curl.exe -H "Metadata: true" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2021-12-13&resource=https://vault.azure.net/" > azure_vm_vault_token.txt
-curl.exe -H "Metadata: true" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2021-12-13&resource=https://storage.azure.com/" > azure_vm_storage_token.txt
 
 ECHO Saving SAM, System and Security...
 reg save HKLM\SAM SAM 2>&1
 reg save HKLM\System System 2>&1
 reg save HKLM\Security Security 2>&1
 
-ECHO Running privilege escalation checks...
-powershell -nop -exec bypass -c ". ..\deps\PrivescCheck.ps1; Invoke-PrivescCheck -Extended -Report PrivescCheck_$($env:COMPUTERNAME) -Format TXT,HTML"
 
 ECHO Done!
 GOTO END
