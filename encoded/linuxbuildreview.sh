@@ -1,4 +1,214 @@
 #!/bin/sh
+# RH Review
+# Script to review a Red Hat build for software versions and security configuration
+
+echo "============================================================"
+echo "Red Hat Specific"
+echo "============================================================"
+echo ""
+
+# Installed Software Versions
+echo "============================================================"
+echo "Installed Software Versions"
+echo "============================================================"
+rpm -qa --qf '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n'
+echo ""
+
+# Kernel Version
+echo "============================================================"
+echo "Kernel Version"
+echo "============================================================"
+uname -r
+echo ""
+
+# Checking for Available Updates
+echo "============================================================"
+echo "Checking for Available Updates"
+echo "============================================================"
+yum check-update
+echo ""
+
+# Checking for Unnecessary Services
+echo "============================================================"
+echo "Checking for Unnecessary Services"
+echo "============================================================"
+systemctl list-unit-files | grep enabled
+echo ""
+
+# SELinux Status
+echo "============================================================"
+echo "SELinux Status"
+echo "============================================================"
+sestatus
+echo ""
+
+# Firewall Status
+echo "============================================================"
+echo "Firewall Status"
+echo "============================================================"
+firewall-cmd --state
+firewall-cmd --list-all
+echo ""
+
+# Password Policy
+echo "============================================================"
+echo "Password Policy"
+echo "============================================================"
+cat /etc/login.defs | grep PASS
+cat /etc/security/pwquality.conf | grep -v '^#' | grep -v '^$'
+echo ""
+
+# SSH Root Login Configuration
+echo "============================================================"
+echo "SSH Root Login Configuration"
+echo "============================================================"
+grep "^PermitRootLogin" /etc/ssh/sshd_config
+echo ""
+
+# Open Ports
+echo "============================================================"
+echo "Open Ports"
+echo "============================================================"
+ss -tuln
+echo ""
+
+# World Writable Files
+echo "============================================================"
+echo "World Writable Files"
+echo "============================================================"
+find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print
+find / -xdev -type f \( -perm -0002 \) -print
+echo ""
+
+# SUID/SGID Files
+echo "============================================================"
+echo "SUID/SGID Files"
+echo "============================================================"
+find / -perm /6000 -type f -exec ls -ld {} \;
+echo ""
+
+# Auditd Status
+echo "============================================================"
+echo "Auditd Status"
+echo "============================================================"
+systemctl is-active auditd
+echo ""
+
+# Running Services
+echo "============================================================"
+echo "Running Services"
+echo "============================================================"
+systemctl list-units --type=service --state=running
+echo ""
+
+# Software
+echo "============================================================"
+echo "Running Services"
+echo "============================================================"
+rpm -qa
+yum list installed
+dnf list installed
+rpm -qa --qf '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n'
+echo ""
+
+# Solaris Specific
+echo "============================================================"
+echo "Solaris Specific"
+echo "============================================================"
+echo ""
+
+
+# Installed Software Versions
+echo "============================================================"
+echo "Installed Software Versions"
+echo "============================================================"
+pkginfo -l | grep -E 'PKGINST|VERSION'
+echo ""
+
+# Kernel Version
+echo "============================================================"
+echo "Kernel Version"
+echo "============================================================"
+uname -a
+echo ""
+
+# Checking for Available Updates
+echo "============================================================"
+echo "Checking for Available Updates"
+echo "============================================================"
+pkg update -nv
+echo ""
+
+# Checking for Unnecessary Services
+echo "============================================================"
+echo "Checking for Unnecessary Services"
+echo "============================================================"
+svcs -a | grep online
+echo ""
+
+# Checking SMF (Service Management Facility) configuration
+echo "============================================================"
+echo "SMF Configuration"
+echo "============================================================"
+svcs -xv
+echo ""
+
+# Firewall Status (IP Filter)
+echo "============================================================"
+echo "Firewall Status (IP Filter)"
+echo "============================================================"
+svcs ipfilter
+ipfstat -io
+echo ""
+
+# Password Policy
+echo "============================================================"
+echo "Password Policy"
+echo "============================================================"
+grep "PASS" /etc/default/passwd
+echo ""
+
+# SSH Root Login Configuration
+echo "============================================================"
+echo "SSH Root Login Configuration"
+echo "============================================================"
+grep "^PermitRootLogin" /etc/ssh/sshd_config
+echo ""
+
+# Open Ports
+echo "============================================================"
+echo "Open Ports"
+echo "============================================================"
+netstat -an | grep LISTEN
+echo ""
+
+# World Writable Files
+echo "============================================================"
+echo "World Writable Files"
+echo "============================================================"
+find / -type d \( -perm -0002 -a ! -perm -1000 \) -exec ls -ld {} \;
+find / -type f \( -perm -0002 \) -exec ls -l {} \;
+echo ""
+
+# SUID/SGID Files
+echo "============================================================"
+echo "SUID/SGID Files"
+echo "============================================================"
+find / -perm /6000 -type f -exec ls -ld {} \;
+echo ""
+
+# Auditd Status
+echo "============================================================"
+echo "Auditd Status"
+echo "============================================================"
+svcs auditd
+echo ""
+
+# Running Services
+echo "============================================================"
+echo "Running Services"
+echo "============================================================"
+svcs -xv
 
 VERSION="ng"
 ADVISORY="This script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own computers and/or with the computer owner's permission."
