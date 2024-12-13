@@ -1,11 +1,21 @@
-$computers = Get-Content "sorted-computers.txt"
+$logFile = "access.log"
+$computers = Get-Content "C:\path\to\sorted-computers.txt"
+
 foreach ($comp in $computers) {
-    Write-Host "Checking C$ on computer: $comp"
+    $startMsg = "Checking C$ on computer: $comp"
+    Write-Host $startMsg
+    $startMsg | Out-File $logFile -Append  # Append to log
+
     try {
         Get-ChildItem "\\$comp\c$" -ErrorAction Stop | Out-Null
-        Write-Host "SUCCESS: Able to list c$ on $comp"
+        
+        $successMsg = "SUCCESS: Able to list c$ on $comp"
+        Write-Host $successMsg
+        $successMsg | Out-File $logFile -Append
     }
     catch {
-        Write-Host "FAILED: Cannot access c$ on $comp"
+        $failMsg = "FAILED: Cannot access c$ on $comp"
+        Write-Host $failMsg
+        $failMsg | Out-File $logFile -Append
     }
 }
