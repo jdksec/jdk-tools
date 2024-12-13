@@ -1,0 +1,21 @@
+$logFile = "access.log"
+$computers = Get-Content "sorted-computers.txt"
+
+foreach ($comp in $computers) {
+    $startMsg = "Checking C$ on computer: $comp"
+    Write-Host $startMsg
+    $startMsg | Out-File $logFile -Append  # Append to log
+
+    try {
+        Get-ChildItem "\\$comp\c$" -ErrorAction Stop | Out-Null
+        
+        $successMsg = "SUCCESS: Able to list c$ on $comp"
+        Write-Host $successMsg
+        $successMsg | Out-File $logFile -Append
+    }
+    catch {
+        $failMsg = "FAILED: Cannot access c$ on $comp"
+        Write-Host $failMsg
+        $failMsg | Out-File $logFile -Append
+    }
+}
