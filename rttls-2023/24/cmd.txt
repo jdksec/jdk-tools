@@ -1,5 +1,5 @@
 $logFile = "access.log"
-$computers = Get-Content "C:\path\to\sorted-computers.txt"
+$computers = Get-Content "sorted-computers.txt"
 
 foreach ($comp in $computers) {
     $startMsg = "Checking C$ on computer: $comp"
