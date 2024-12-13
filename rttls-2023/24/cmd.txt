@@ -1,0 +1,11 @@
+$computers = Get-Content "sorted-computers.txt"
+foreach ($comp in $computers) {
+    Write-Host "Checking C$ on computer: $comp"
+    try {
+        Get-ChildItem "\\$comp\c$" -ErrorAction Stop | Out-Null
+        Write-Host "SUCCESS: Able to list c$ on $comp"
+    }
+    catch {
+        Write-Host "FAILED: Cannot access c$ on $comp"
+    }
+}
