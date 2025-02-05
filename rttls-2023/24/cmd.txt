@@ -1,5 +1,6 @@
+
 $logFile = "access.log"
-$computers = Get-Content "sorted-computers.txt"
+$computers = net group "domain computers" /domain | ForEach-Object {$_.Trim().Split()} | Sort-Object -unique | findstr "\$" | foreach-object {$_.TrimEnd('$')}
 
 foreach ($comp in $computers) {
     $startMsg = "Checking C$ on computer: $comp"
