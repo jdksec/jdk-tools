@@ -1,0 +1,21 @@
+$hostnames = Get-Content .\sorted-computers.txt
+foreach ($hostname in $hostnames) {
+    $trimmedHostname = $hostname.Trim()
+    if ([string]::IsNullOrEmpty($trimmedHostname)) {
+        continue
+    }
+    try {
+        $dnsInfo = Resolve-DnsName -Name $trimmedHostname -ErrorAction SilentlyContinue
+
+        if ($dnsInfo -and $dnsInfo.IPAddress) {
+            foreach ($ip in $dnsInfo.IPAddress) {
+                Write-Host "    IP Address: $ip"
+                "$ip" | Add-Content -Path ipaddresses.txt
+            }
+        }
+    }
+    catch {
+        continue
+    }
+}
+type ipaddresses.txt
